@@ -7,8 +7,10 @@ For example a neural net may look like:
 inputs -> Linear -> Tanh -> Linear -> Softmax
 """
 import numpy as np
-from typing import Dict
+from typing import Dict, Callable
 from bloo.tensor import Tensor
+
+F = Callable[[Tensor], Tensor]
 
 
 class Layer:
@@ -61,3 +63,41 @@ class Linear(Layer):
         self.grads["b"] = np.sum(grad, axis=0)
         self.grads["w"] = self.input.T @ grad
         return grad @ self.params["w"].T
+
+
+class Activation(Layer):
+    """
+    An activation function layer just applies a function
+    elememt wise to its inputs
+    """
+
+    def __input__(self, f: F, f_prime: F) -> None:
+        super().__init__()
+        self.f = f
+        self.f_prime = f_prime
+
+    def forward(self, input: Tensor) -> Tensor:
+        self.input = input
+        return self.f(input)
+
+    def backward(self, grad: Tensor) -> Tensor:
+        """
+        if y = f(g(z))
+        then dy/dz = f'(g(z)) * g'(z)
+        """
+        self.input = input
+        return self.f_prime(self.input) * grad
+
+
+def tanh(x: Tensor) -> Tensor:
+    return np.tanh(x)
+
+
+def tanh_prime(x: Tensor) -> Tensor:
+    y = tanh(x)
+    return 1 - y ** 2
+
+
+class Tanh(Activation):
+    def __init__(self):
+        super().__init__()
