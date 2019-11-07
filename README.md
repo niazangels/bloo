@@ -1,7 +1,9 @@
 # Bloo!
 _A tiny deep learning library from scratch in Python_
 
-![alt text](images/bloo.png "Bloo!")
+<p align="center"> 
+<img src="images/bloo.png">
+</p>
 
 ## But why?
 
