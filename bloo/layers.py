@@ -19,7 +19,7 @@ class Layer:
         self.grads: Dict[str, Tensor] = {}
         pass
 
-    def forward(self, input: Tensor) -> Tensor:
+    def forward(self, inputs: Tensor) -> Tensor:
         """
         Produce the outputs for this set of inputs
         """
@@ -44,9 +44,9 @@ class Linear(Layer):
         self.params["w"] = np.random.randn(input_size, output_size)
         self.params["b"] = np.random.randn(output_size)
 
-    def forward(self, input: Tensor) -> Tensor:
-        self.input = input
-        return input @ self.params["w"] + self.params["b"]
+    def forward(self, inputs: Tensor) -> Tensor:
+        self.inputs = inputs
+        return inputs @ self.params["w"] + self.params["b"]
 
     def backward(self, grad: Tensor) -> Tensor:
         """
@@ -61,7 +61,7 @@ class Linear(Layer):
         """
         # grads are (batch_size x output_size)
         self.grads["b"] = np.sum(grad, axis=0)
-        self.grads["w"] = self.input.T @ grad
+        self.grads["w"] = self.inputs.T @ grad
         return grad @ self.params["w"].T
 
 
@@ -71,22 +71,22 @@ class Activation(Layer):
     elememt wise to its inputs
     """
 
-    def __input__(self, f: F, f_prime: F) -> None:
+    def __init__(self, f: F, f_prime: F) -> None:
         super().__init__()
         self.f = f
         self.f_prime = f_prime
 
-    def forward(self, input: Tensor) -> Tensor:
-        self.input = input
-        return self.f(input)
+    def forward(self, inputs: Tensor) -> Tensor:
+        self.inputs = inputs
+        return self.f(inputs)
 
     def backward(self, grad: Tensor) -> Tensor:
         """
         if y = f(g(z))
         then dy/dz = f'(g(z)) * g'(z)
         """
-        self.input = input
-        return self.f_prime(self.input) * grad
+        self.grad = grad
+        return self.f_prime(self.inputs) * grad
 
 
 def tanh(x: Tensor) -> Tensor:
@@ -100,4 +100,4 @@ def tanh_prime(x: Tensor) -> Tensor:
 
 class Tanh(Activation):
     def __init__(self):
-        super().__init__()
+        super().__init__(tanh, tanh_prime)

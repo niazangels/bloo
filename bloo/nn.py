@@ -12,10 +12,10 @@ class NeuralNet:
     def __init__(self, layers: Sequence[Layer]) -> None:
         self.layers = layers
 
-    def forward(self, input: Tensor) -> Tensor:
+    def forward(self, inputs: Tensor) -> Tensor:
         for layer in self.layers:
-            input = layer.forward(input)
-        return input
+            inputs = layer.forward(inputs)
+        return inputs
 
     def backward(self, grad: Tensor) -> Tensor:
         for layer in reversed(self.layers):
