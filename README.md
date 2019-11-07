@@ -6,7 +6,7 @@ _A tiny deep learning library from scratch in Python_
 
 - [x] Tensors
 - [x] Loss Functions
-- [ ] Layers
+- [x] Layers
 - [ ] Neural Nets
 - [ ] Optimizers
 - [ ] Data
