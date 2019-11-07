@@ -10,6 +10,6 @@ _A tiny deep learning library from scratch in Python_
 - [x] Neural Nets
 - [x] Optimizers
 - [x] Data
-- [ ] Training
-- [ ] End-to-end example: XOR
-- [ ] End-to-end example: FizzBuzz
+- [x] Training
+- [x] End-to-end example: XOR
+- [x] End-to-end example: FizzBuzz

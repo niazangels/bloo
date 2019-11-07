@@ -1,7 +1,8 @@
 """
 Helper to train a NeuralNet
 """
-from numpy import np
+import numpy as np
+
 from bloo.tensor import Tensor
 from bloo.nn import NeuralNet
 from bloo.loss import Loss, SSE

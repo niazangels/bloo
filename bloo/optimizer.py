@@ -11,8 +11,9 @@ class Optimizer:
         raise NotImplementedError
 
 
-def SGD(Optimizer):
+class SGD(Optimizer):
     def __init__(self, lr: float = 0.01) -> None:
+        super().__init__()
         self.lr = lr
 
     def step(self, net: NeuralNet) -> None:
