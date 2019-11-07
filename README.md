@@ -7,9 +7,9 @@ _A tiny deep learning library from scratch in Python_
 - [x] Tensors
 - [x] Loss Functions
 - [x] Layers
-- [ ] Neural Nets
-- [ ] Optimizers
-- [ ] Data
+- [x] Neural Nets
+- [x] Optimizers
+- [x] Data
 - [ ] Training
 - [ ] End-to-end example: XOR
 - [ ] End-to-end example: FizzBuzz
