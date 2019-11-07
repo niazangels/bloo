@@ -2,7 +2,7 @@
 A neural net is just a collection of layers
 It behaves a lot like Layers.
 """
-from typing import Sequence
+from typing import Sequence, Iterator, Tuple
 
 from bloo.tensor import Tensor
 from bloo.layers import Layer
@@ -21,3 +21,9 @@ class NeuralNet:
         for layer in reversed(self.layers):
             grad = layer.backward(grad)
         return grad
+
+    def params_and_grads(self) -> Iterator[Tuple[Tensor, Tensor]]:
+        for layer in self.layers:
+            for name, param in layer.param.items():
+                grad = layer.grads[name]
+                yield param, grad
